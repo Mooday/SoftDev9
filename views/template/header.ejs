@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LogDelivery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="../../public/stylesheets/dashboard.css" rel="stylesheet">
+    <style>
+        body { padding-top: 50px; margin-bottom: 60px; }
+        img { width: 140px; height: 140px; }
+        .fa-sign-out { float: right; }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <%if(success_msg!=''){%>
+                <div class="alert alert-success"><%=success_msg%></div>
+            <%}%>
+            <%if(error_msg!=''){%>
+                <div class="alert alert-danger"><%=error_msg%></div>
+            <%}%>
+            <%if(error!=''){%>
+                <div class="alert alert-danger"><%=error%></div>
+            <%}%>
+        </div>
+    </div>
+</div>
+<div class="content-wrapper">
+    <div class="container-fluid">

@@ -1,0 +1,53 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Lista de Rutas</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-auto ml-sm-auto col-lg-12 px-4">
+                <div class="container">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Origen</th>
+                                <th scope="col">Destino</th>
+                                <th scope="col">Identificador</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%for(var i=0; i <routes.length ; i++){%>
+                            <tr>
+                                <td><%=routes[i].origen%></td>
+                                <td><%=routes[i].destino%></td>
+                                <td><%=routes[i].idn%></td>
+                                <%if(routes[i].tipo=="Ground"){%>
+                                <td class="fas fa-truck-moving">
+                                    <%}else{
+                                        if(routes[i].tipo=="Air"){%>
+                                            <td class="fas fa-plane">
+                                        <%}else{
+                                            if(routes[i].tipo=="Ship"){%>
+                                                <td class="fas fa-ship">
+                                            <%}
+                                        }
+                                    }%> <%=routes[i].tipo%></td>
+                                <td>
+                                    <a href="/admin/subroute/<%= routes[i].idn %>" class="btn btn-primary fas fa-map-marked-alt"></a>
+                                    <a href="/admin/deleteroute/<%= routes[i].idn %>" class="btn btn-danger fas fa-trash-alt"></a>
+                                </td>
+                            </tr>
+                            <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+</main>
+</div>
+</div>
+<%include template/footer.ejs%>

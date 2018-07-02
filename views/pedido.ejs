@@ -1,0 +1,85 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Creacion de Pedidos</h1>
+    </div>
+    <%if(body_msg!=''){%>
+        <div class="alert alert-success"><%=body_msg%></div>
+    <%}%>
+    <div class="container">
+        <div class="container">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <form method="post" action="/admin/addpedido">
+                    <div class="form-group">
+                        <label>Nombre del Cliente</label>
+                        <input type="text" class="form-control" placeholder="Nombre" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email del Cliente</label>
+                        <input type="email" class="form-control" placeholder="Email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Celular del Cliente</label>
+                        <input type="text" class="form-control" placeholder="Celular" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Que Envia</label>
+                        <input type="text" class="form-control" placeholder="Que Envia?" name="desc1">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select class="form-control" type="text" name="tipo" placeholder="Tipo">
+                            <option value="" disabled selected>Tipo</option>
+                            <option value="Fragil">Fragil</option>
+                            <option value="Sobre">Sobre</option>
+                            <option value="Caja">Caja</option>
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Animal Vivo">Animal Vivo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion Detallada</label>
+                        <textarea type="text" class="form-control" placeholder="Descripcion" rows="5" name="desc2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Tamaño</label>
+                        <input type="text" class="form-control" placeholder="Tamaño" name="size">
+                    </div>
+                    <div class="form-group">
+                        <label>Peso</label>
+                        <input type="text" class="form-control" placeholder="Peso" name="weight">
+                    </div>
+                    <div class="form-group">
+                        <label>Lugar de Envio</label>
+                        <select class="form-control" type="text" name="origen" placeholder="Lugar de Envio">
+                            <option value="" disabled selected>Lugar de Envio</option>
+                            <%for(i=0;i<succ.length;i++){%>
+                            <option value="<%=succ[i].id%>"><%=succ[i].ubicacion%></option>
+                            <%}%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Lugar de Retiro</label>
+                        <select class="form-control" type="text" name="destino" placeholder="Lugar de Retiro">
+                            <option value="" disabled selected>Lugar de Retiro</option>
+                            <%for(i=0;i<succ.length;i++){%>
+                            <option value="<%=succ[i].id%>"><%=succ[i].ubicacion%></option>
+                            <%}%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Destinatario</label>
+                        <input type="text" class="form-control" placeholder="Destinatario" name="receiver">
+                    </div>
+                    <div class="form-group">
+                        <label>Codigo de Pedido</label>
+                        <input type="text" class="form-control" placeholder="Codigo de Pedido" name="code">
+                    </div>
+                    <button type="submit" class="btn btn-default">Crear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<%include template/footer.ejs%>

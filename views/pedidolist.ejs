@@ -1,0 +1,54 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Lista de Pedidos</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-auto ml-sm-auto col-lg-12 px-4">
+                <div class="container">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Nombre del Cliente</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Destinatario</th>
+                                <th scope="col">Origen</th>
+                                <th scope="col">Destino</th>
+                                <th scope="col">Codigo de Orden</th>
+                                <th scope="col">Tracking Code</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%for(var i=0;i < pedido.length ;i++){%>
+                            <tr>
+                                <td><%=pedido[i].name%></td>
+                                <td><%=pedido[i].desc1%></td>
+                                <td><%=pedido[i].tipo%></td>
+                                <td><%=pedido[i].receiver%></td>
+                                <td><%=pedido[i].origen%></td>
+                                <td><%=pedido[i].destino%></td>
+                                <td><%=pedido[i].code%></td>
+                                <td><%=pedido[i].track%></td>
+                                <td><%=pedido[i].status%></td>
+                                <td>
+                                    <a href="/admin/pedidodetalle/<%= pedido[i]._id %>" class="btn btn-primary fas fa-file-alt"></a>
+                                    <a href="/admin/deletepedido/<%= pedido[i]._id %>" class="btn btn-danger fas fa-trash-alt"></a>
+                                </td>
+                            </tr>
+                            <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%include template/footer.ejs%>

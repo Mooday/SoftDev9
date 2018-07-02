@@ -1,0 +1,93 @@
+<% include template/header.ejs %>
+<% include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Flota</h1>
+    </div>
+    <div class="container">
+        <div class="container">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <!--FORM-->
+                    <div class="col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="/admin/addfleet" method="post">
+                                    <div class="form-group">
+                                        <input class="form-control" name="code" placeholder="Code">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="plate" placeholder="Plate">
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" type="text" name="type" placeholder="Type">
+                                            <option value="" disabled selected>Type</option>
+                                            <option value="Ground">Ground</option>
+                                            <option value="Ship">Ship</option>
+                                            <option value="Air">Air</option>
+                                        </select>
+                                    </div>
+                                    <!--<div class="form-group">
+                                        <select class="form-control" type="text" name="status" placeholder="Status">
+                                            <option value="" disabled selected>Status</option>
+                                            <option value="car">Available</option>
+                                            <option value="truck"></option>
+                                            <option value="van">Van</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="tracking" placeholder="Tracking">
+                                    </div>-->
+                                    <button class="btn btn-primary" type="submit">
+                                        Crear
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LIST -->
+                    <div class="col-md-7">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr><th></th>
+                                <th>Code</th>
+                                <th>Plate</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Tracking</th>
+                                <th>Operations</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% for(var i=0; i < fleet.length; i++) { %>
+                            <tr>
+                                <td><%= i + 1%></td>
+                                <td><strong><%= fleet[i].code %></strong></td>
+                                <td><%= fleet[i].plate %></td>
+                                <td><%= fleet[i].type %></td>
+                                <td><%= fleet[i].status %></td>
+                                <td><%= fleet[i].tracking %></td>
+                                <td>
+                                    <!--<a
+                                            class="<%= fleet[i].status ? 'btn btn-success' : 'btn btn-dark'%>"
+                                            href="/turn/<%= fleet[i]._id %>">Done</a>-->
+                                    <a href="/admin/deletefleet/<%= fleet[i]._id %>"
+                                       class="btn btn-danger">
+                                        Delete
+                                    </a>
+                                    <a href="/admin/editfleet/<%= fleet[i]._id %>" class="btn btn-info">
+                                        Edit
+                                    </a>
+                                </td>
+                            </tr>
+                            <% } %>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<% include template/footer.ejs %>

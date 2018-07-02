@@ -1,0 +1,86 @@
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">LogDelivery</a>
+    <ul class="navbar-nav px-3">
+        <%if(user!=''){%>
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/users/logout">Logout</a>
+        </li>
+        <%}%>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <%if(user.role=="Administrador"){%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/register">
+                            <span class="fas fa-user"></span>
+                            Crear Usuario <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/userlist">
+                            <span class="fas fa-user"></span>
+                            Lista de Usuarios <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <%}
+                    if(user.role=='Logistica'){%>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/sucursal">
+                            <span class="fas fa-building"></span>
+                            Crear Sucursal <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/suclist">
+                            <span class="fas fa-building"></span>
+                            Lista de Sucursales <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/routes">
+                            <span class="fas fa-map-marked-alt"></span>
+                            Crear Ruta <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/routeslist">
+                            <span class="fas fa-map-marked-alt"></span>
+                            Lista de Rutas <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/fleet">
+                            <span class="fas fa-truck-moving"></span>
+                            Flota <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <%}
+                    if(user.role=='Recepcion'){%>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/pedido">
+                            <span class="fas fa-id-card"></span>
+                            Crear Pedidos <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/pedidolist">
+                            <span class="fas fa-id-card"></span>
+                            Lista de Pedidos <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <%}%>
+                </ul>
+            </div>
+        </nav>
+
+
+
+
+
+
+
+

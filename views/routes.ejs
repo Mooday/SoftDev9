@@ -1,0 +1,45 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Creacion de Rutas</h1>
+    </div>
+    <div class="container">
+        <div class="container col-sm-4 col-sm-offset-2 align-left">
+            <form method="post" action="/admin/addroute">
+                <div class="form-group">
+                    <label>Origen</label>
+                    <select name="origen" id="origen">
+                        <option value="" disabled selected>Select</option>
+                        <%for(var i=0;i<sucursal.length;i++){%>
+                        <option value="<%=sucursal[i].id%>"><%=sucursal[i].id%></option>
+                        <%}%>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Destino</label>
+                    <select name="destino" id="destino">
+                        <option value="" disabled selected>Select</option>
+                        <%for(var i=0;i<sucursal.length;i++){%>
+                        <option value="<%=sucursal[i].id%>"><%=sucursal[i].id%></option>
+                        <%}%>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Identificador</label>
+                    <input type="text" class="form-control" placeholder="Identificador" name="idn">
+                </div>
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <select name="tipo" id="tipo">
+                        <option value="" disabled selected>Select</option>
+                        <option value="Ground">Ground</option>
+                        <option value="Ship">Ship</option>
+                        <option value="Air">Air</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Crear</button>
+            </form>
+        </div>
+    </div>
+<%include template/footer.ejs%>

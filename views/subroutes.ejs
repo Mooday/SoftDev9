@@ -1,0 +1,70 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Lista de Sub-Rutas</h1>
+    </div>
+    <h5 class="h6">Ruta <%=routes.idn%></h5>
+    <div class="container">
+    <div class="container">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Origen</th>
+                    <th scope="col">Destino</th>
+                    <th scope="col">Identificador</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <%for(var i=0; i <routes.subroute.length ; i++){%>
+                <tr>
+                    <td><%=routes.subroute[i].origen%></td>
+                    <td><%=routes.subroute[i].destino%></td>
+                    <td><%=routes.subroute[i].idn%></td>
+                    <td>
+                        <a href="/admin/deletesubroute/<%= routes.subroute[i].idn %>" class="btn btn-danger fas fa-trash-alt"></a>
+                    </td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <br><br>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Creacion de Sub-Rutas</h1>
+        </div>
+        <h5 class="h6">Ruta <%=routes.idn%></h5>
+        <div class="container">
+            <div class="container col-sm-4 col-sm-offset-2 align-left">
+                <form method="post" action="/admin/addsubroute">
+                    <div class="form-group">
+                        <label>Origen</label>
+                        <select name="origen" id="origen">
+                            <option value="" disabled selected>Select</option>
+                            <%for(var i=0;i<routes.succ.length;i++){%>
+                            <option value="<%= routes.succ[i].id %>"><%= routes.succ[i].id %></option>
+                            <%}%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Destino</label>
+                        <select name="destino" id="destino">
+                            <option value="" disabled selected>Select</option>
+                            <%for(var i=0;i<routes.succ.length;i++){%>
+                            <option value="<%=routes.succ[i].id%>"><%=routes.succ[i].id%></option>
+                            <%}%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Identificador</label>
+                        <input type="text" class="form-control" placeholder="Identificador" name="idn" value="<%=routes.idn%>" readonly>
+                    </div>
+                    <button type="submit" class="btn btn-success">Crear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<%include template/footer.ejs%>

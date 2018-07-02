@@ -1,0 +1,51 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Creacion de Usuario</h1>
+    </div>
+    <div class="container">
+        <form method="post" action="/users/register">
+           <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control" placeholder="Nombre" name="name">
+          </div>
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" placeholder="Username" name="username">
+          </div>
+           <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" placeholder="Email" name="email">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password">
+          </div>
+          <div class="form-group">
+            <label>Confirmar Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password2">
+          </div>
+            <div class="form-group">
+                <label>Rol</label>
+                <select class="form-control" type="text" name="role" placeholder="Rol">
+                    <option value="" disabled selected>Rol</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Recepcion">Recepcion</option>
+                    <option value="Control">Control</option>
+                    <option value="Logistica">Logistica</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Sucursal</label>
+                <select class="form-control" type="text" name="sucursal" placeholder="Sucursal">
+                    <option value="" disabled selected>Sucursal</option>
+                    <%for(i=0;i<succ.length;i++){%>
+                    <option value="<%=succ[i].id%>"><%=succ[i].id%></option>
+                    <%}%>
+                </select>
+            </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+</div>
+<%include template/footer.ejs%>
