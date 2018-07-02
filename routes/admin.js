@@ -246,6 +246,11 @@ router.get('/pedidolist', ensureAuthenticated,function(req,res){
     }
 });
 
+router.get('/deletepedido/:id', ensureAuthenticated, async (req, res) => {
+    await Pedido.remove({_id: req.params.id});
+res.redirect('/admin/pedidolist');
+});
+
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return next();
