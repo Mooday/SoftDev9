@@ -251,6 +251,22 @@ router.get('/deletepedido/:id', ensureAuthenticated, async (req, res) => {
 res.redirect('/admin/pedidolist');
 });
 
+router.get('/pedidodetalle/:id', ensureAuthenticated,function(req,res){
+    console.log(req.user.role);
+    if(req.user.role == "Recepcion") {
+        Pedido.findById({_id:req.params.id},function (err, pedido) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(pedido);
+                res.render('pedidodetalle', {pedido: pedido});
+            }
+        });
+    }else{
+        res.render('errorpage');
+    }
+});
+
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return next();

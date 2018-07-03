@@ -1,0 +1,68 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Detalle del Pedido - Pedido #<%=pedido[0].code%></h1>
+    </div>
+    <div class="container">
+        <div class="container">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <form>
+                    <div class="form-group">
+                        <label>Nombre del Cliente</label>
+                        <input type="text" class="form-control" placeholder="Nombre" name="name" value="<%=pedido[0].name%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Email del Cliente</label>
+                        <input type="email" class="form-control" placeholder="Email" name="email" value="<%=pedido[0].email%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Celular del Cliente</label>
+                        <input type="text" class="form-control" placeholder="Celular" name="phone" value="<%=pedido[0].phone%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Que Envia</label>
+                        <textarea type="text" class="form-control" placeholder="Que Envia?" rows="3" name="desc1" readonly><%=pedido[0].desc1%></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <input type="text" class="form-control" placeholder="Tipo" name="tipo" value="<%=pedido[0].tipo%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion Detallada</label>
+                        <textarea type="text" class="form-control" placeholder="Descripcion" rows="5" name="desc2" readonly><%=pedido[0].desc2%></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Tamaño</label>
+                        <input type="text" class="form-control" placeholder="Tamaño" name="size" value="<%=pedido[0].size%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Peso</label>
+                        <input type="text" class="form-control" placeholder="Peso" name="weight" value="<%=pedido[0].weight%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Lugar de Envio</label>
+                        <input type="text" class="form-control" placeholder="Lugar de Envio" name="origen" value="<%=pedido[0].origen%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Lugar de Retiro</label>
+                        <input type="text" class="form-control" placeholder="Lugar de Retiro" name="destino" value="<%=pedido[0].destino%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Destinatario</label>
+                        <input type="text" class="form-control" placeholder="Destinatario" name="receiver" value="<%=pedido[0].receiver%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Codigo de Pedido</label>
+                        <input type="text" class="form-control" placeholder="Codigo de Pedido" name="code" value="<%=pedido[0].code%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Codigo de Tracking</label>
+                        <input type="text" class="form-control" placeholder="Codigo de Tracking" name="track" value="<%=pedido[0].track%>" readonly>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<%include template/footer.ejs%>
