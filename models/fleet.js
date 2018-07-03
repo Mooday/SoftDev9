@@ -9,10 +9,7 @@ const TaskSchema = Schema({
         type: String,
         default: "Available",
     },
-    tracking: {
-        type: String,
-        default: "Garage",
-    },
+    tracking: String,
 });
 
 module.exports = mongoose.model('fleet', TaskSchema);

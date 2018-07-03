@@ -18,6 +18,10 @@ const PedidoSchema = Schema({
     status:{
         type: String,
         default: "Pending"
+    },
+    manifest:{
+        type: String,
+        default: "Not Assigned"
     }
 });
 

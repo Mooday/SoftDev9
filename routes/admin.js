@@ -10,6 +10,7 @@ var Routes=require('../models/route');
 var Subroutes=require('../models/subroute');
 var Fleet=require('../models/fleet');
 var Pedido=require('../models/pedido');
+var Manifest=require('../models/manifest');
 
 router.get('/userlist', ensureAuthenticated, function(req, res) {
     if(req.user.role == "Administrador") {
@@ -156,7 +157,16 @@ router.get('/fleet', ensureAuthenticated,function(req,res){
 });
 
 router.post('/addfleet', ensureAuthenticated, async (req, res, next) => {
-    const fleet = new Fleet(req.body);
+    var code = req.body.code;
+    var plate = req.body.plate;
+    var type = req.body.type;
+    var tracking = req.user.sucursal;
+    const fleet = new Fleet({
+        code: code,
+        plate: plate,
+        type: type,
+        tracking: tracking
+    });
     await fleet.save();
     res.redirect('/admin/fleet');
 });
@@ -174,10 +184,10 @@ router.post('/editfleet/:id', ensureAuthenticated,async (req, res) => {
 res.redirect('/admin/fleet');
 });
 
-router.get('/deletefleete/:id', ensureAuthenticated, async (req, res) => {
-    let id  = req.params;
-await Fleet.remove({_id: id});
-res.redirect('/fleet');
+router.get('/deletefleet/:id', ensureAuthenticated, async (req, res) => {
+    let id  = req.params.id;
+    await Fleet.remove({_id: id});
+res.redirect('/admin/fleet');
 });
 
 router.get('/pedido', ensureAuthenticated, function(req,res){
@@ -233,7 +243,7 @@ router.post('/addpedido', ensureAuthenticated, async (req, res, next) => {
 router.get('/pedidolist', ensureAuthenticated,function(req,res){
     console.log(req.user.role);
     if(req.user.role == "Recepcion") {
-        Pedido.find(function (err, pedido) {
+        Pedido.find({origen:req.user.sucursal},function (err, pedido) {
             if (err) {
                 console.log(err);
             } else {
@@ -260,6 +270,53 @@ router.get('/pedidodetalle/:id', ensureAuthenticated,function(req,res){
             } else {
                 console.log(pedido);
                 res.render('pedidodetalle', {pedido: pedido});
+            }
+        });
+    }else{
+        res.render('errorpage');
+    }
+});
+
+router.get('/manifest', ensureAuthenticated, function(req,res){
+    console.log(req.user.role);
+    if(req.user.role == "Carga") {
+        Routes.find({origen:req.user.sucursal},function (err, route) {
+            if (err) {
+                console.log(err);
+            } else {
+                Fleet.find({tracking:req.user.sucursal,status:'Available'},function (err, fleet) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(route);
+                        console.log(fleet);
+                        res.render('manifest', {fleet: fleet, route:route});
+                    }
+                });
+            }
+        });
+    }else{
+        res.render('errorpage');
+    }
+});
+
+router.post('/addmanifest', ensureAuthenticated, async (req, res, next) => {
+    await Fleet.update({code:req.body.fleet}, {status:'In Transit'});
+    const manifest = new Manifest(req.body);
+    await manifest.save();
+    req.flash('body_msg','Manifiesto #'+req.body.code+' creado exitosamente.');
+    res.redirect('/admin/manifest');
+});
+
+router.get('/manifestlist', ensureAuthenticated,function(req,res){
+    console.log(req.user.role);
+    if(req.user.role == "Carga") {
+        Manifest.find(function (err, manifest) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(manifest);
+                res.render('manifestlist', {manifest: manifest});
             }
         });
     }else{

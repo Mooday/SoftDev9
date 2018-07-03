@@ -72,6 +72,20 @@
                             Lista de Pedidos <span class="sr-only"></span>
                         </a>
                     </li>
+                    <%}
+                    if(user.role=='Carga'){%>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/manifest">
+                            <span class="fas fa-file-invoice"></span>
+                            Crear Manifiesto <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/manifestlist">
+                            <span class="fas fa-file-invoice"></span>
+                            Lista de Manifiestos <span class="sr-only"></span>
+                        </a>
+                    </li>
                     <%}%>
                 </ul>
             </div>
