@@ -324,6 +324,42 @@ router.get('/manifestlist', ensureAuthenticated,function(req,res){
     }
 });
 
+router.get('/asignarpedido/:id/:route', ensureAuthenticated,function(req,res){
+    console.log(req.user.role);
+    if(req.user.role == "Carga") {
+        Manifest.find({code:req.params.id},function (err, manifest) {
+            if (err) {
+                console.log(err);
+            } else {
+                Subroutes.find({idn:req.params.route},function (err, subroute) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        Pedido.find({origen:req.user.sucursal, status: "Pending"},function (err, pedido) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log(manifest);
+                                console.log(subroute);
+                                console.log(pedido);
+                                res.render('asignarpedido', {manifest: manifest, subroute: subroute, pedido: pedido});
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }else{
+        res.render('errorpage');
+    }
+});
+
+router.get('/pedidoasignacion/:code/:manifest/:route', ensureAuthenticated, async (req, res, next) => {
+    await Pedido.update({code:req.params.code}, {status:"Loaded", manifest:req.params.manifest});
+    req.flash('body_msg','Pedido #'+req.params.code+' agregado exitosamente al Manifiesto #'+req.params.manifest);
+    res.redirect('/admin/asignarpedido/'+req.params.manifest+'/'+req.params.route);
+});
+
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return next();

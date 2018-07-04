@@ -1,0 +1,77 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Asignacion de Pedidos a Manifiesto de Carga</h1>
+    </div>
+    <%if(body_msg!=''){%>
+        <div class="alert alert-success"><%=body_msg%></div>
+    <%}%>
+    <h3>Detalle del Manifiesto:</h3><br>
+    <h6><strong>Codigo de Manifiesto: </strong><%=manifest[0].code%></h6><br>
+    <h6><strong>Fecha de Creacion: </strong><%=manifest[0].date%></h6><br>
+    <h6><strong>Flota Asignada: </strong><%=manifest[0].fleet%></h6><br>
+    <h6><strong>Ruta Asignada: </strong><%=manifest[0].route%></h6><br>
+    <h6><strong>Paradas (Subruta): </strong></h6>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-auto">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Origen</th>
+                        <th scope="col">Destino</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%for(var i=0;i<subroute.length;i++){%>
+                    <tr>
+                        <td><%=subroute[i].origen%></td>
+                        <td><%=subroute[i].destino%></td>
+                    </tr>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-auto ml-sm-auto col-lg-12 px-4">
+                <div class="container">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Codigo de Pedido</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Origen</th>
+                                <th scope="col">Destino</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%for(var i=0;i < pedido.length ;i++){%>
+                            <tr>
+                                <td><%=pedido[i].code%></td>
+                                <td><%=pedido[i].tipo%></td>
+                                <td><%=pedido[i].desc1%></td>
+                                <td><%=pedido[i].origen%></td>
+                                <td><%=pedido[i].destino%></td>
+                                <td>
+                                    <a href="/admin/pedidoasignacion/<%= pedido[i].code %>/<%=manifest[0].code%>/<%=manifest[0].route%>" class="btn btn-warning fas fa-sign-in-alt"></a>
+                                </td>
+                            </tr>
+                            <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%include template/footer.ejs%>
