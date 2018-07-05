@@ -220,6 +220,7 @@ router.post('/addpedido', ensureAuthenticated, async (req, res, next) => {
     var destino = req.body.destino;
     var code = req.body.code;
     var track = randomValueHex(12);
+    var ubicacion = req.user.sucursal;
     const newPedido = new Pedido({
         name : name,
         email : email,
@@ -233,7 +234,8 @@ router.post('/addpedido', ensureAuthenticated, async (req, res, next) => {
         origen : origen,
         destino : destino,
         code : code,
-        track : track
+        track : track,
+        ubicacion: ubicacion
     });
     await newPedido.save();
     req.flash('body_msg', 'Tu codigo de tracking es: '+track);

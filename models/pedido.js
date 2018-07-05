@@ -22,7 +22,8 @@ const PedidoSchema = Schema({
     manifest:{
         type: String,
         default: "Not Assigned"
-    }
+    },
+    ubicacion: String,
 });
 
 module.exports = mongoose.model('pedido', PedidoSchema);
