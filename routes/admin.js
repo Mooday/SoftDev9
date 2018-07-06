@@ -39,7 +39,7 @@ router.get('/sucursal', ensureAuthenticated,function(req,res){
 router.post('/addsucursal', ensureAuthenticated, async (req, res, next) => {
     const sucursal = new Sucursal(req.body);
     await sucursal.save();
-    req.flash('Sucursal creada exitosamente.');
+    req.flash('body_msg','Sucursal creada exitosamente.');
     res.redirect('/admin/sucursal');
 });
 
@@ -77,8 +77,18 @@ router.get('/routes', ensureAuthenticated,function(req,res){
 router.post('/addroute', ensureAuthenticated,async (req, res, next) => {
     const route = new Routes(req.body);
     await route.save();
-    req.flash('Ruta creada exitosamente.');
+    req.flash('body_msg','Ruta creada exitosamente.');
 res.redirect('/admin/routes');
+});
+
+router.get('/deleteroute/:id', ensureAuthenticated,async (req,res,next) => {
+    if(req.user.role == "Logistica") {
+    await Routes.remove({_id:req.params.id});
+    req.flash('body_error','Ruta eliminada exitosamente.');
+    res.redirect('/admin/routeslist/');
+}else{
+    res.render('errorpage');
+}
 });
 
 router.get('/routeslist', ensureAuthenticated,function(req,res){
@@ -115,10 +125,6 @@ router.get('/subroute/:idn', ensureAuthenticated,function(req,res){
                 });
             }
         });
-        /*const succ = Sucursal.find({});
-        const subroute = Subroutes.find({idn:req.params.idn});
-        console.log(succ);
-        res.render('subroutes', {routes:{succ:succ,subroute:subroute, idn:req.params.idn}});*/
     }else{
         res.render('errorpage');
     }
@@ -127,8 +133,18 @@ router.get('/subroute/:idn', ensureAuthenticated,function(req,res){
 router.post('/addsubroute', ensureAuthenticated, async (req, res, next) => {
     const route = new Subroutes(req.body,);
     await route.save();
-    req.flash('Ruta creada exitosamente.');
+    req.flash('body_msg','Ruta creada exitosamente.');
     res.redirect('/admin/subroute/'+req.body.idn);
+});
+
+router.get('/deletesubroute/:id/:idn', ensureAuthenticated,async (req,res,next) => {
+    if(req.user.role == "Logistica") {
+        await Subroutes.remove({_id:req.params.id});
+        req.flash('body_error','Subruta eliminada exitosamente.');
+        res.redirect('/admin/subroute/'+req.params.idn);
+    }else{
+    res.render('errorpage');
+    }
 });
 
 router.get('/deleteuser/:id', ensureAuthenticated,async (req,res,next) => {
@@ -264,7 +280,8 @@ router.get('/pedidolist', ensureAuthenticated,function(req,res){
 
 router.get('/deletepedido/:id', ensureAuthenticated, async (req, res) => {
     await Pedido.remove({_id: req.params.id});
-res.redirect('/admin/pedidolist');
+    req.flash('body_error', 'Pedido eliminado exitosamente.');
+    res.redirect('/admin/pedidolist');
 });
 
 router.get('/pedidodetalle/:id', ensureAuthenticated,function(req,res){
@@ -469,6 +486,16 @@ router.get('/entregar/:code', ensureAuthenticated, async (req, res, next) => {
     res.redirect('/admin/entrega');
 });
 
+router.post('/open/tracking', async (req, res, next) => {
+    Pedido.find({track:req.body.track},function (err, pedido) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(pedido);
+            res.render('tracking', {pedido: pedido});
+        }
+    });
+});
 
 const updateStatus= async function(code, status, sucursal){
     await Pedido.update({code:code}, {status:status, ubicacion:sucursal});

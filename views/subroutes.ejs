@@ -4,6 +4,12 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Lista de Sub-Rutas</h1>
     </div>
+    <%if(body_msg!=''){%>
+    <div class="alert alert-success"><%=body_msg%></div>
+    <%}
+    if(body_error!=''){%>
+    <div class="alert alert-danger"><%=body_error%></div>
+    <%}%>
     <h5 class="h6">Ruta <%=routes.idn%></h5>
     <div class="container">
     <div class="container">
@@ -24,7 +30,7 @@
                     <td><%=routes.subroute[i].destino%></td>
                     <td><%=routes.subroute[i].idn%></td>
                     <td>
-                        <a href="/admin/deletesubroute/<%= routes.subroute[i].idn %>" class="btn btn-danger fas fa-trash-alt"></a>
+                        <a href="/admin/deletesubroute/<%= routes.subroute[i]._id %>/<%=routes.idn%>" class="btn btn-danger fas fa-trash-alt"></a>
                     </td>
                 </tr>
                 <%}%>
@@ -42,7 +48,7 @@
                 <form method="post" action="/admin/addsubroute">
                     <div class="form-group">
                         <label>Origen</label>
-                        <select name="origen" id="origen">
+                        <select class="form-control" name="origen" id="origen">
                             <option value="" disabled selected>Select</option>
                             <%for(var i=0;i<routes.succ.length;i++){%>
                             <option value="<%= routes.succ[i].id %>"><%= routes.succ[i].id %></option>
@@ -51,7 +57,7 @@
                     </div>
                     <div class="form-group">
                         <label>Destino</label>
-                        <select name="destino" id="destino">
+                        <select class="form-control" name="destino" id="destino">
                             <option value="" disabled selected>Select</option>
                             <%for(var i=0;i<routes.succ.length;i++){%>
                             <option value="<%=routes.succ[i].id%>"><%=routes.succ[i].id%></option>

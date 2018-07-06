@@ -4,6 +4,12 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Lista de Rutas</h1>
     </div>
+    <%if(body_msg!=''){%>
+    <div class="alert alert-success"><%=body_msg%></div>
+    <%}
+    if(body_error!=''){%>
+    <div class="alert alert-danger"><%=body_error%></div>
+    <%}%>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-auto ml-sm-auto col-lg-12 px-4">
@@ -38,7 +44,7 @@
                                     }%> <%=routes[i].tipo%></td>
                                 <td>
                                     <a href="/admin/subroute/<%= routes[i].idn %>" class="btn btn-primary fas fa-map-marked-alt"></a>
-                                    <a href="/admin/deleteroute/<%= routes[i].idn %>" class="btn btn-danger fas fa-trash-alt"></a>
+                                    <a href="/admin/deleteroute/<%= routes[i]._id %>" class="btn btn-danger fas fa-trash-alt"></a>
                                 </td>
                             </tr>
                             <%}%>

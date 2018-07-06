@@ -4,12 +4,15 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Creacion de Rutas</h1>
     </div>
+    <%if(body_msg!=''){%>
+    <div class="alert alert-success"><%=body_msg%></div>
+    <%}%>
     <div class="container">
         <div class="container col-sm-4 col-sm-offset-2 align-left">
             <form method="post" action="/admin/addroute">
                 <div class="form-group">
                     <label>Origen</label>
-                    <select name="origen" id="origen">
+                    <select class="form-control" name="origen" id="origen">
                         <option value="" disabled selected>Select</option>
                         <%for(var i=0;i<sucursal.length;i++){%>
                         <option value="<%=sucursal[i].id%>"><%=sucursal[i].id%></option>
@@ -18,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label>Destino</label>
-                    <select name="destino" id="destino">
+                    <select class="form-control" name="destino" id="destino">
                         <option value="" disabled selected>Select</option>
                         <%for(var i=0;i<sucursal.length;i++){%>
                         <option value="<%=sucursal[i].id%>"><%=sucursal[i].id%></option>
@@ -31,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label>Tipo</label>
-                    <select name="tipo" id="tipo">
+                    <select class="form-control" name="tipo" id="tipo">
                         <option value="" disabled selected>Select</option>
                         <option value="Ground">Ground</option>
                         <option value="Ship">Ship</option>

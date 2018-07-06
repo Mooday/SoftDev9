@@ -1,6 +1,6 @@
 <%include template/header.ejs%>
   <div class="container col-sm-4 col-sm-offset-2 align-center">
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center text-white bg-dark mb-3">
       <h2 class="page-header fas fa-box-open">LogDelivery</h2>
       <br>
       <form method="post" action="/users/login">
@@ -14,6 +14,18 @@
         </div>
         <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign In</button>
       </form>
+    </div>
+    <br>
+    <div class="card text-center text-white bg-dark mb-3">
+      <div class="card-body">
+        <h4 class="page-header">Package Tracking</h4><br>
+        <form method="post" action="/admin/open/tracking">
+          <div class="form-group">
+            <input type="text" class="form-control" name="track" placeholder="Introduzca su Tracking Code">
+          </div>
+          <button type="submit" class="btn btn-warning btn-flat m-b-30 m-t-30">Rastrear</button>
+        </form>
+      </div>
     </div>
   </div>
 <%include template/footer.ejs%>
