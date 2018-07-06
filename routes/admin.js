@@ -265,7 +265,7 @@ res.redirect('/admin/pedidolist');
 
 router.get('/pedidodetalle/:id', ensureAuthenticated,function(req,res){
     console.log(req.user.role);
-    if(req.user.role == "Recepcion") {
+    if(req.user.role == "Recepcion" || req.user.role == "Carga") {
         Pedido.findById({_id:req.params.id},function (err, pedido) {
             if (err) {
                 console.log(err);
@@ -360,6 +360,36 @@ router.get('/pedidoasignacion/:code/:manifest/:route', ensureAuthenticated, asyn
     await Pedido.update({code:req.params.code}, {status:"Loaded", manifest:req.params.manifest});
     req.flash('body_msg','Pedido #'+req.params.code+' agregado exitosamente al Manifiesto #'+req.params.manifest);
     res.redirect('/admin/asignarpedido/'+req.params.manifest+'/'+req.params.route);
+});
+
+router.get('/manifestdetalle/:id/:route', ensureAuthenticated,function(req,res){
+    console.log(req.user.role);
+    if(req.user.role == "Carga") {
+        Manifest.find({code:req.params.id},function (err, manifest) {
+            if (err) {
+                console.log(err);
+            } else {
+                Subroutes.find({idn:req.params.route},function (err, subroute) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        Pedido.find({"$or":[{manifest:req.params.id}, {status: "Loaded"}, {status: "In Destiny"}, {status:"Delivered"}]},function (err, pedido) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log(manifest);
+                                console.log(subroute);
+                                console.log(pedido);
+                                res.render('manifestdetalle', {manifest: manifest, subroute: subroute, pedido: pedido});
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }else{
+        res.render('errorpage');
+    }
 });
 
 function ensureAuthenticated(req, res, next){
