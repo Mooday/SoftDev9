@@ -337,7 +337,7 @@ router.get('/asignarpedido/:id/:route', ensureAuthenticated,function(req,res){
                     if (err) {
                         console.log(err);
                     } else {
-                        Pedido.find({origen:req.user.sucursal, status: "Pending"},function (err, pedido) {
+                        Pedido.find({origen:req.user.sucursal, "$or":[{status: "Pending"},{status: "Unloaded"}]},function (err, pedido) {
                             if (err) {
                                 console.log(err);
                             } else {
@@ -391,6 +391,61 @@ router.get('/manifestdetalle/:id/:route', ensureAuthenticated,function(req,res){
         res.render('errorpage');
     }
 });
+
+router.get('/descarga', ensureAuthenticated,function(req,res){
+    console.log(req.user.role);
+    if(req.user.role == "Carga") {
+        Pedido.find({ubicacion:req.user.sucursal, "$or":[{status:"Unloaded"},{status:"In Destiny"}]},function (err, pedido) {
+            if (err) {
+                console.log(err);
+            } else {
+                Fleet.find({status:"In Transit"},function (err, fleet) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(pedido);
+                        console.log(fleet);
+                        res.render('descarga', {pedido: pedido, fleet:fleet});
+                    }
+                });
+            }
+        });
+    }else{
+        res.render('errorpage');
+    }
+});
+
+router.post('/unload', ensureAuthenticated, async (req, res, next) => {
+    if(req.user.role == "Carga") {
+        Pedido.find({code:req.body.code},function (err, pedido) {
+            if (err) {
+                console.log(err);
+            } else {
+                if(pedido[0].destino == req.user.sucursal){
+                    updateStatus(req.body.code, "In Destiny", req.user.sucursal);
+                    req.flash('body_msg','Pedido #'+req.body.code+' descargado en la Sucursal!');
+                    res.redirect('/admin/descarga');
+                }else{
+                    updateStatus(req.body.code, "Unloaded", req.user.sucursal);
+                    req.flash('body_msg','Pedido #'+req.body.code+' descargado en la Sucursal!');
+                    res.redirect('/admin/descarga');
+                }
+            }
+        });
+    }
+});
+
+router.post('/updateposition', ensureAuthenticated, async (req, res, next) => {
+    if(req.user.role == "Carga"){
+        await Fleet.update({code: req.body.fleet}, {tracking: req.user.sucursal});
+        req.flash('body_msg', 'Flota #' + req.body.fleet + ' : posicion actualizada.');
+        res.redirect('/admin/descarga');
+    }
+});
+
+const updateStatus= async function(code, status, sucursal){
+    await Pedido.update({code:code}, {status:status, ubicacion:sucursal});
+}
 
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){

@@ -1,0 +1,95 @@
+<%include template/header.ejs%>
+<%include template/nav.ejs%>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Descarga de Paquetes</h1>
+    </div>
+    <%if(body_msg!=''){%>
+    <div class="alert alert-success"><%=body_msg%></div>
+    <%}%>
+    <h3>Actualizar Posicion de Flota</h3>
+    <div class="container">
+        <div class="container">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <form action="/admin/updateposition" method="post">
+                            <div class="form-group">
+                                <label>Flota</label>
+                                <select class="form-control" type="text" name="fleet" placeholder="Flota">
+                                    <option value="" disabled selected>Flota</option>
+                                    <%for(i=0;i<fleet.length;i++){%>
+                                    <option value="<%=fleet[i].code%>"><%=fleet[i].code%></option>
+                                    <%}%>
+                                </select>
+                            </div>
+                            <button class="btn btn-success" type="submit">
+                                Actualizar
+                            </button>
+                        </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3>Descargar Paquetes</h3>
+    <div class="container">
+        <div class="container">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <form method="post" action="/admin/unload">
+                    <div class="form-group">
+                        <label>Codigo de Pedido</label>
+                        <input type="text" class="form-control" placeholder="Codigo de Pedido" name="code">
+                    </div>
+                    <div class="form-group">
+                        <label>Flota</label>
+                        <select class="form-control" type="text" name="fleet" placeholder="Flota">
+                            <option value="" disabled selected>Flota</option>
+                            <%for(i=0;i<fleet.length;i++){%>
+                            <option value="<%=fleet[i].code%>"><%=fleet[i].code%></option>
+                            <%}%>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Descargar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3>Paquetes Descargados en Sucursal</h3><br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-auto ml-sm-auto col-lg-12 px-4">
+                <div class="container">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Codigo de Pedido</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Origen</th>
+                                <th scope="col">Destino</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%for(var i=0;i < pedido.length ;i++){%>
+                            <tr>
+                                <td><%=pedido[i].code%></td>
+                                <td><%=pedido[i].tipo%></td>
+                                <td><%=pedido[i].desc1%></td>
+                                <td><%=pedido[i].origen%></td>
+                                <td><%=pedido[i].destino%></td>
+                                <td>
+                                    <a href="/admin/pedidodetalle/<%= pedido[i]._id %>" class="btn btn-primary fas fa-clipboard-list"></a>
+                                </td>
+                            </tr>
+                            <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%include template/footer.ejs%>
