@@ -286,7 +286,7 @@ router.get('/deletepedido/:id', ensureAuthenticated, async (req, res) => {
 
 router.get('/pedidodetalle/:id', ensureAuthenticated,function(req,res){
     console.log(req.user.role);
-    if(req.user.role == "Recepcion" || req.user.role == "Carga") {
+    if(req.user.role == "Recepcion" || req.user.role == "Carga" || req.user.role == "Administrador") {
         Pedido.findById({_id:req.params.id},function (err, pedido) {
             if (err) {
                 console.log(err);
@@ -484,6 +484,22 @@ router.get('/entregar/:code', ensureAuthenticated, async (req, res, next) => {
     await Pedido.update({code:req.params.code}, {status:"Delivered"});
     req.flash('body_msg','Pedido #'+req.params.code+' entregado al cliente exitosamente!');
     res.redirect('/admin/entrega');
+});
+
+router.get('/entregaslist', ensureAuthenticated,function(req,res){
+    console.log(req.user.role);
+    if(req.user.role == "Administrador") {
+        Pedido.find({status:"Delivered"},function (err, pedido) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(pedido);
+                res.render('entregaslist', {pedido: pedido});
+            }
+        });
+    }else{
+        res.render('errorpage');
+    }
 });
 
 router.post('/open/tracking', async (req, res, next) => {
