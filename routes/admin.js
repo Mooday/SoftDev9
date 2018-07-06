@@ -394,7 +394,7 @@ router.get('/manifestdetalle/:id/:route', ensureAuthenticated,function(req,res){
                     if (err) {
                         console.log(err);
                     } else {
-                        Pedido.find({"$or":[{manifest:req.params.id}, {status: "Loaded"}, {status: "In Destiny"}, {status:"Delivered"}]},function (err, pedido) {
+                        Pedido.find({manifest:req.params.id, origen:req.user.sucursal,"$or":[{status: "Loaded"}, {status: "In Destiny"}, {status:"Delivered"}]},function (err, pedido) {
                             if (err) {
                                 console.log(err);
                             } else {

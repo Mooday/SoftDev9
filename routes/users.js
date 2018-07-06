@@ -50,7 +50,7 @@ router.post('/register', function (req, res) {
     var errors = req.validationErrors();
 
     if (errors) {
-        req.flash('error_msg', 'No se ha podido crear el usuario. Introduzca nuevos datos.');
+        req.flash('body_error', 'No se ha podido crear el usuario. Introduzca nuevos datos.');
         res.redirect('/users/register');
     }
     else {
@@ -62,7 +62,7 @@ router.post('/register', function (req, res) {
                     "$regex": "^" + email + "\\b", "$options": "i"
                 }}, function (err, mail) {
                 if (user || mail) {
-                    req.flash('error_msg', 'User already exists.');
+                    req.flash('body_error', 'User already exists.');
                     res.redirect('/users/register');
                 }
                 else {
@@ -78,7 +78,7 @@ router.post('/register', function (req, res) {
                         if (err) throw err;
                         console.log(user);
                     });
-                    req.flash('success_msg', 'El usuario ha sido registrado.');
+                    req.flash('body_msg', 'El usuario ha sido registrado.');
                     res.redirect('/users/register');
                 }
             });
