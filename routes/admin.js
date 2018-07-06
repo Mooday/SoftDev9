@@ -173,15 +173,19 @@ router.post('/addfleet', ensureAuthenticated, async (req, res, next) => {
 
 router.get('/editfleet/:id', ensureAuthenticated, async (req, res, next) => {
     const fleet = await Fleet.findById({_id: req.params.id});
-    //const fleet = await Fleet.findById(req.params.id);
-console.log(fleet);
-res.render('editfleet', { fleet });
+    console.log(fleet);
+    res.render('editfleet', { fleet });
 });
 
 router.post('/editfleet/:id', ensureAuthenticated,async (req, res) => {
-    //const id = req.params.id;
     await Fleet.update({_id: req.params.id}, req.body);
-res.redirect('/admin/fleet');
+    res.redirect('/admin/fleet');
+});
+
+router.get('/makeavailable/:code', ensureAuthenticated,async (req, res) => {
+    await Fleet.update({code: req.params.code}, {status: "Available"});
+    req.flash('body_msg', 'Flota #'+req.params.code+' esta ahora disponible!');
+    res.redirect('/admin/fleet');
 });
 
 router.get('/deletefleet/:id', ensureAuthenticated, async (req, res) => {
@@ -442,6 +446,29 @@ router.post('/updateposition', ensureAuthenticated, async (req, res, next) => {
         res.redirect('/admin/descarga');
     }
 });
+
+router.get('/entrega', ensureAuthenticated,function(req,res){
+    console.log(req.user.role);
+    if(req.user.role == "Recepcion") {
+        Pedido.find({status:"In Destiny"},function (err, pedido) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(pedido);
+                res.render('entrega', {pedido: pedido});
+            }
+        });
+    }else{
+        res.render('errorpage');
+    }
+});
+
+router.get('/entregar/:code', ensureAuthenticated, async (req, res, next) => {
+    await Pedido.update({code:req.params.code}, {status:"Delivered"});
+    req.flash('body_msg','Pedido #'+req.params.code+' entregado al cliente exitosamente!');
+    res.redirect('/admin/entrega');
+});
+
 
 const updateStatus= async function(code, status, sucursal){
     await Pedido.update({code:code}, {status:status, ubicacion:sucursal});

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">LogDelivery</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0 fas fa-box-open" href="/"> LogDelivery</a>
     <ul class="navbar-nav px-3">
         <%if(user!=''){%>
         <li class="nav-item text-nowrap">
@@ -70,6 +70,12 @@
                         <a class="nav-link " href="/admin/pedidolist">
                             <span class="fas fa-id-card"></span>
                             Lista de Pedidos <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin/entrega">
+                            <span class="fas fa-box-open"></span>
+                            Entrega de Paquetes <span class="sr-only"></span>
                         </a>
                     </li>
                     <%}

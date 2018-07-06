@@ -9,6 +9,12 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <form>
                     <div class="form-group">
+                        <label><strong>Codigo de Pedido: </strong><%=pedido.code%></label>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Codigo de Tracking: </strong><%=pedido.track%></label>
+                    </div>
+                    <div class="form-group">
                         <label><strong>Nombre del Cliente: </strong><%=pedido.name%></label>
                     </div>
                     <div class="form-group">
@@ -16,6 +22,9 @@
                     </div>
                     <div class="form-group">
                         <label><strong>Celular del Cliente: </strong><%=pedido.phone%></label>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Destinatario: </strong><%=pedido.receiver%></label>
                     </div>
                     <div class="form-group">
                         <label><strong>Que Envia: </strong><%=pedido.desc1%></label>
@@ -38,18 +47,6 @@
                     </div>
                     <div class="form-group">
                         <label><strong>Lugar de Retiro: </strong><%=pedido.destino%></label>
-                    </div>
-                    <div class="form-group">
-                        <label><strong>Destinatario: </strong><%=pedido.receiver%></label>
-                    </div>
-                    <div class="form-group">
-                        <label><strong>Codigo de Pedido: </strong><%=pedido.code%></label>
-                    </div>
-                    <div class="form-group">
-                        <label><strong>Codigo de Tracking: </strong><%=pedido.track%></label>
-                    </div>
-                    <div class="form-group">
-                        <label><strong>Codigo de Manifiesto: </strong><%=pedido.manifest%></label>
                     </div>
                 </form>
             </div>
